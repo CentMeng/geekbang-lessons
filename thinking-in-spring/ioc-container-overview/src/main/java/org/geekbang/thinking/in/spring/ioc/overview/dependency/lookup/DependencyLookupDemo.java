@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * 依赖查找示例
- * 1. 通过名称的方式来查找
+ * 通过类型和名称的方式来查找
  *
  * @author <a href="mailto:mengshaojie@188.com">CentMeng</a>
  * @since
@@ -38,6 +38,11 @@ public class DependencyLookupDemo {
         // 配置 XML 配置文件
         // 启动 Spring 应用上下文
         BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-lookup-context.xml");
+        //根据Bean查找
+        //实时查找
+        lookupInRealTime(beanFactory);
+        //延迟查找
+        lookupInLazy(beanFactory);
         // 按照类型查找
         lookupByType(beanFactory);
         // 按照类型查找结合对象
@@ -45,8 +50,6 @@ public class DependencyLookupDemo {
         // 通过注解查找对象
         lookupByAnnotationType(beanFactory);
 
-//        lookupInRealTime(beanFactory);
-//        lookupInLazy(beanFactory);
     }
 
     private static void lookupByAnnotationType(BeanFactory beanFactory) {
@@ -65,6 +68,10 @@ public class DependencyLookupDemo {
         }
     }
 
+    /**
+     * 根据类型查找
+     * @param beanFactory
+     */
     private static void lookupByType(BeanFactory beanFactory) {
         User user = beanFactory.getBean(User.class);
         System.out.println("实时查找：" + user);
