@@ -19,7 +19,6 @@ package org.geekbang.thinking.in.spring.ioc.overview.dependency.injection;
 import org.geekbang.thinking.in.spring.ioc.overview.repository.UserRepository;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.env.Environment;
 
@@ -43,7 +42,7 @@ public class DependencyInjectionDemo {
         System.out.println(userRepository.getBeanFactory());
 
         System.out.println(userRepository.getBeanFactory() == beanFactory);
-        //为什么不相等返回false，并且getBeanFactory并不是返回的null，而是返回DefaultListableBeanFactory
+        //不相等返回false，并且getBeanFactory并不是返回的null，而是返回DefaultListableBeanFactory,Spring的维护和生命周期管理均在BeanFactory实现类中，绝大多数是指DefaultListableBeanFactory。具体看whoIsIoCContainer方法中讲解
 
         //依赖查找
 //        System.out.println(beanFactory.getBean(BeanFactory.class));
@@ -57,6 +56,8 @@ public class DependencyInjectionDemo {
         // 依赖来源三：容器內建 Bean （Environment并没有配置，但是可以输出，因为是容器内建Bean）
         Environment environment = beanFactory.getBean(Environment.class);
         System.out.println("获取内建Bean Environment："+environment);
+
+        //ApplicationContext 是 BeanFactory的子接口，所以使用ApplicationContext也可以
 
 //        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-injection-context.xml");
 //
@@ -81,18 +82,26 @@ public class DependencyInjectionDemo {
 //        System.out.println("获取 Environment 类型的 Bean：" + environment);
     }
 
-    private static void whoIsIoCContainer(UserRepository userRepository, ApplicationContext applicationContext) {
+    /**
+     * 谁才是IoC容器 FactoryBean or ApplicationContext
+     * @param userRepository
+     * @param beanFactory
+     */
+    private static void whoIsIoCContainer(UserRepository userRepository, BeanFactory beanFactory) {
 
 
-        // ConfigurableApplicationContext <- ApplicationContext <- BeanFactory
+        // ConfigurableApplicationContext定义了getBeanFactory ，它继承ApplicationContext ，而ApplicationContext是BeanFactory的子接口
 
-        // ConfigurableApplicationContext#getBeanFactory()
+        // ConfigurableApplicationContext 为什么要定义getBeanFactory()方法，它本身就是个BeanFactory
+        /**
+         * 实现类是AbstractRefreshableApplication，这里是组合的模式引入了DefaultListableBeanFactory，所以为什么返回的是DefaultListableBeanFactory
+         */
 
 
         // 这个表达式为什么不会成立
-        System.out.println(userRepository.getBeanFactory() == applicationContext);
+        System.out.println(userRepository.getBeanFactory() == beanFactory);
 
-        // ApplicationContext is BeanFactory
+        //重点：ApplicationContext 就是 BeanFactory，是BeanFactory的子接口
 
     }
 
