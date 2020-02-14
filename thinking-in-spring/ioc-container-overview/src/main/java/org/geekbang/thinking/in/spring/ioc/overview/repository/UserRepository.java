@@ -37,6 +37,8 @@ public class UserRepository {
 
     private ObjectFactory<ApplicationContext> objectFactory;
 
+
+
     public Collection<User> getUsers() {
         return users;
     }

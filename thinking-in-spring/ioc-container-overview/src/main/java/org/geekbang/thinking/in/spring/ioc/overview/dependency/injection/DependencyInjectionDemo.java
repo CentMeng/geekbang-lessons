@@ -32,31 +32,53 @@ import org.springframework.core.env.Environment;
 public class DependencyInjectionDemo {
 
     public static void main(String[] args) {
-        // 配置 XML 配置文件
-        // 启动 Spring 应用上下文
-//        BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-injection-context.xml");
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-injection-context.xml");
-
-        // 依赖来源一：自定义 Bean
-        UserRepository userRepository = applicationContext.getBean("userRepository", UserRepository.class);
-
-//        System.out.println(userRepository.getUsers());
-
-        // 依赖来源二：依赖注入（內建依赖）
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-injection-context.xml");
+        //自定义Bean
+        // 依赖来源一：自定义 Bean UserRepository
+        UserRepository userRepository = beanFactory.getBean("userRepository",UserRepository.class);
+        //依赖注入
+        System.out.println(userRepository.getUsers());
+        // 依赖来源二：依赖注入（容器內建依赖） beanFactory是内建的依赖
         System.out.println(userRepository.getBeanFactory());
+
+        System.out.println(userRepository.getBeanFactory() == beanFactory);
+        //为什么不相等返回false，并且getBeanFactory并不是返回的null，而是返回DefaultListableBeanFactory
+
+        //依赖查找
+//        System.out.println(beanFactory.getBean(BeanFactory.class));
 
 
         ObjectFactory userFactory = userRepository.getObjectFactory();
+        System.out.println(userFactory.getObject());
+        System.out.println(userFactory.getObject() == beanFactory);
+        //此处相等
 
-        System.out.println(userFactory.getObject() == applicationContext);
+        // 依赖来源三：容器內建 Bean （Environment并没有配置，但是可以输出，因为是容器内建Bean）
+        Environment environment = beanFactory.getBean(Environment.class);
+        System.out.println("获取内建Bean Environment："+environment);
 
-        // 依赖查找（错误）
-//        System.out.println(beanFactory.getBean(BeanFactory.class));
-
-        // 依赖来源三：容器內建 Bean
-        Environment environment = applicationContext.getBean(Environment.class);
-        System.out.println("获取 Environment 类型的 Bean：" + environment);
+//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-injection-context.xml");
+//
+//        // 依赖来源一：自定义 Bean
+//        UserRepository userRepository = applicationContext.getBean("userRepository", UserRepository.class);
+//
+////        System.out.println(userRepository.getUsers());
+//
+//        // 依赖来源二：依赖注入（內建依赖）
+//        System.out.println(userRepository.getBeanFactory());
+//
+//
+//        ObjectFactory userFactory = userRepository.getObjectFactory();
+//
+//        System.out.println(userFactory.getObject() == applicationContext);
+//
+//        // 依赖查找（错误）
+////        System.out.println(beanFactory.getBean(BeanFactory.class));
+//
+//        // 依赖来源三：容器內建 Bean
+//        Environment environment = applicationContext.getBean(Environment.class);
+//        System.out.println("获取 Environment 类型的 Bean：" + environment);
     }
 
     private static void whoIsIoCContainer(UserRepository userRepository, ApplicationContext applicationContext) {
