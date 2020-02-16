@@ -29,6 +29,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:mengshaojie@188.com">CentMeng</a>
  * @since
+ * 如果Xml场景并且不需要那么多复杂路径的时候，BeanFactory就比较适合
  */
 public class BeanFactoryAsIoCContainerDemo {
 
@@ -46,9 +47,9 @@ public class BeanFactoryAsIoCContainerDemo {
     }
 
     private static void lookupCollectionByType(BeanFactory beanFactory) {
-        if (beanFactory instanceof ListableBeanFactory) {
+        if (beanFactory instanceof ListableBeanFactory){
             ListableBeanFactory listableBeanFactory = (ListableBeanFactory) beanFactory;
-            Map<String, User> users = listableBeanFactory.getBeansOfType(User.class);
+            Map<String,User> users = listableBeanFactory.getBeansOfType(User.class);
             System.out.println("查找到的所有的 User 集合对象：" + users);
         }
     }
