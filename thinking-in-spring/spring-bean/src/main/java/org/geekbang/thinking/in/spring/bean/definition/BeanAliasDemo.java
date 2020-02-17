@@ -34,7 +34,7 @@ public class BeanAliasDemo {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/bean-definitions-context.xml");
         // 通过别名 xiaomage-user 获取曾用名 user 的 bean
         User user = beanFactory.getBean("user", User.class);
-        User xiaomageUser = beanFactory.getBean("xiaomage-user", User.class);
-        System.out.println("xiaomage-user 是否与 user Bean 相同：" + (user == xiaomageUser));
+        User msjUser = beanFactory.getBean("msj-user", User.class);
+        System.out.println("msj-user 是否与 user Bean 相同：" + (user == msjUser));
     }
 }
