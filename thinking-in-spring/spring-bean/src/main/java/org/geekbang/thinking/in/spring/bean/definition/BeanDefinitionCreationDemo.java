@@ -34,13 +34,12 @@ public class BeanDefinitionCreationDemo {
 
         // 1.通过 BeanDefinitionBuilder 构建
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
-        // 通过属性设置
-        beanDefinitionBuilder
-                .addPropertyValue("id", 1)
-                .addPropertyValue("name", "小马哥");
+        // 通过属性设置 也可以通过构造函数addConstructorArgReference此方法是通过一个对象的构造函数
+        beanDefinitionBuilder.addPropertyValue("id",1).addPropertyValue("name","孟少杰");
         // 获取 BeanDefinition 实例
         BeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
-        // BeanDefinition 并非 Bean 终态，可以自定义修改
+        // BeanDefinition 并非 Bean 终态，可以自定义修改，比如
+//        beanDefinition.setBeanClassName("myUser");
 
         // 2. 通过 AbstractBeanDefinition 以及派生类
         GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition();
@@ -52,8 +51,9 @@ public class BeanDefinitionCreationDemo {
 //        propertyValues.addPropertyValue("name", "小马哥");
         propertyValues
                 .add("id", 1)
-                .add("name", "小马哥");
+                .add("name", "孟少杰");
         // 通过 set MutablePropertyValues 批量操作属性
         genericBeanDefinition.setPropertyValues(propertyValues);
+        BeanDefinition beanDefinition1 = genericBeanDefinition.getOriginatingBeanDefinition();
     }
 }
