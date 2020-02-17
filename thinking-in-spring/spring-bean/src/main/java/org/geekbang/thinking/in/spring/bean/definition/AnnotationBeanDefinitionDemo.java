@@ -17,7 +17,6 @@
 package org.geekbang.thinking.in.spring.bean.definition;
 
 import org.geekbang.thinking.in.spring.ioc.overview.domain.User;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -26,8 +25,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
-import java.util.Map;
 
 import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
 
@@ -47,16 +44,21 @@ public class AnnotationBeanDefinitionDemo {
         // 注册 Configuration Class（配置类）
         applicationContext.register(AnnotationBeanDefinitionDemo.class);
 
-        // 通过 BeanDefinition 注册 API 实现
+        // 通过 Java API BeanDefinition 注册 API 实现
         // 1.命名 Bean 的注册方式
-        registerUserBeanDefinition(applicationContext, "mercyblitz-user");
+//        registerUserBeanDefinition(applicationContext, "nantian-user");
         // 2. 非命名 Bean 的注册方法
-        registerUserBeanDefinition(applicationContext);
+//        registerUserBeanDefinition(applicationContext);
 
+        // 通过注解方式注入
+        // 1.通过@Bean方式注入
+        // 2.通过@Component扫描方式注入
+        // 3. 通过@Import来进行导入，类上的注解
         // 启动 Spring 应用上下文
         applicationContext.refresh();
         // 按照类型依赖查找
         System.out.println("Config 类型的所有 Beans" + applicationContext.getBeansOfType(Config.class));
+        // @Import引入了一次Config @Component又扫描了一次Config，Spring容器没有重复注册
         System.out.println("User 类型的所有 Beans" + applicationContext.getBeansOfType(User.class));
         // 显示地关闭 Spring 应用上下文
         applicationContext.close();
@@ -91,11 +93,11 @@ public class AnnotationBeanDefinitionDemo {
         /**
          * 通过 Java 注解的方式，定义了一个 Bean
          */
-        @Bean(name = {"user", "xiaomage-user"})
+        @Bean(name = {"user", "msj-user"})
         public User user() {
             User user = new User();
             user.setId(1L);
-            user.setName("小马哥");
+            user.setName("孟少杰");
             return user;
         }
     }
