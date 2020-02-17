@@ -46,9 +46,9 @@ public class AnnotationBeanDefinitionDemo {
 
         // 通过 Java API BeanDefinition 注册 API 实现
         // 1.命名 Bean 的注册方式
-//        registerUserBeanDefinition(applicationContext, "nantian-user");
+        registerUserBeanDefinition(applicationContext, "nantian-user");
         // 2. 非命名 Bean 的注册方法
-//        registerUserBeanDefinition(applicationContext);
+        registerUserBeanDefinition(applicationContext);
 
         // 通过注解方式注入
         // 1.通过@Bean方式注入
@@ -68,7 +68,7 @@ public class AnnotationBeanDefinitionDemo {
         BeanDefinitionBuilder beanDefinitionBuilder = genericBeanDefinition(User.class);
         beanDefinitionBuilder
                 .addPropertyValue("id", 1L)
-                .addPropertyValue("name", "小马哥");
+                .addPropertyValue("name", "南天");
 
         // 判断如果 beanName 参数存在时
         if (StringUtils.hasText(beanName)) {
