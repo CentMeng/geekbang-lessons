@@ -110,6 +110,7 @@ public class User implements BeanNameAware {
                 '}';
     }
 
+    //通过静态方法实例化bean
     public static User createUser() {
         User user = new User();
         user.setId(1L);
