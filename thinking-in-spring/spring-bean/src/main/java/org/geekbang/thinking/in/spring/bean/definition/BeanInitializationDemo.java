@@ -25,6 +25,12 @@ import org.springframework.context.annotation.Lazy;
 
 /**
  * Bean 初始化 Demo
+ * 1.@PostConstruct 标注方法 方式
+ * 2.实现 InitializingBean 接口的 afterPropertiesSet() 方法
+ * 3.自定义初始化方法
+ * XML 配置:<bean init-method=”init” ... />
+ * Java 注解:@Bean(initMethod=”init”)
+ * Java API:AbstractBeanDefinition#setInitMethodName(String)
  *
  * @author <a href="mailto:mengshaojie@188.com">CentMeng</a>
  * @since
