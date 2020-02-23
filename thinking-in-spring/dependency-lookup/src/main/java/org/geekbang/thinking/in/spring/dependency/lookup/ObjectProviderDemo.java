@@ -59,6 +59,7 @@ public class ObjectProviderDemo { // @Configuration 是非必须注解
 
     private static void lookupIfAvailable(AnnotationConfigApplicationContext applicationContext) {
         ObjectProvider<User> userObjectProvider = applicationContext.getBeanProvider(User.class);
+        //当上下文中没有User Bean的时候，使用User的createUser方法创建一个
         User user = userObjectProvider.getIfAvailable(User::createUser);
         System.out.println("当前 User 对象：" + user);
     }
