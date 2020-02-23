@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
 /**
- * 通过 {@link ObjectProvider} 进行依赖查找
+ * 通过 {@link ObjectProvider} 进行依赖查找，类似ObjectFactory
  *
  * @author <a href="mailto:mengshaojie@188.com">CentMeng</a>
  * @since
