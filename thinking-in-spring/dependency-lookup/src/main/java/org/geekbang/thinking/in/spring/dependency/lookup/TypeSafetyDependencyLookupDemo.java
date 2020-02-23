@@ -27,6 +27,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 /**
  * 类型安全 依赖查找示例
  *
+ * ObjectProvider#getIfAvaliable是安全的
+ * 集合类型查找都是安全的
+ *
  * @author <a href="mailto:mengshaojie@188.com">CentMeng</a>
  * @since
  */
