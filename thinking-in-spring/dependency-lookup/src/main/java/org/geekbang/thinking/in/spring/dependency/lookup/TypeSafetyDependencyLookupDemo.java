@@ -89,6 +89,7 @@ public class TypeSafetyDependencyLookupDemo {
         try {
             runnable.run();
         } catch (BeansException exception) {
+            //spring异常区别于javaee不是check型异常是runtime异常，所以需要此方式捕获
             exception.printStackTrace();
         }
     }
