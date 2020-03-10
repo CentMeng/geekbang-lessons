@@ -5,19 +5,25 @@
 实现思想：首先需要上帝类，组装对象以及提供程序入口，比如ApplicationContext是接口，ClassPathXmlApplicationContext是其实现，在实现中组装了BeanFactroy和BeanConfigParser，其中BeanConfigParser是解析配置为BeanDefinition对象。然后BeanFactroy根据BeanConfigParser解析出来的BeanDefinition对象通过java反射创建对象。对于生命周期的管理，可以读取配置对象的属性，进行注册和管理。注册和管理的方法可以用观察者模式,demo中没有实现生命周期的管理，只是在初始化context的实话，就注册实例化了bean。具体大家可以参考文章[孟少杰博客](https://www.bb.bj.cn/article/56)
 
 - ApplicationContext
+
 上帝类，组装对象以及提供程序入口,提供获取bean的方法.
 
 - ClassPathApplicationContext
+
 ApplicationContext的xml解析实现，通过构造函数初始化xml文件解析类BeanConfigParser和Bean工厂类BeanFactory，同时使用加载解析xml文件，并把解析后的BeanDefinition注册到工厂类中。
 
 - BeanDefinition
+
 配置元信息对象，包含类名，ID，是否单例，延迟加载等属性。其中参数属性中，是创建对象时候才会用，所以在解析类中只是解析了有的对象，对没有的属性没有处理，在工厂创建Bean的时候处理。可在BeanFactory搜索"点睛之笔"来了解。
 
 - BeanConfigParser
+
 解析类，用于将文件解析成BeanDefinition对象，解析完成后，ApplicationContext将解析出来的BeanDefinition注册到工厂类BeanFactory中。
 
 - XmlBeanConfigParse
+
 BeanConfigParser的xml解析实现，用于将xml解析成BeanDefinition。
 
 - BeanFactory
+
 包含注册和创建Bean两个方法，其中注册方法，除了将BeanDefinition放入缓存中，还会初始化单例非延迟加载的Bean。创建Bean方法，根据BeanDefinition分为无参初始化和有参初始化，其中有参初始化，需要注意的是关于引用对象的初始化的操作，这里比较重要。这里延迟加载和非延迟加载区别就是，非延迟加载在初始化context的时候就同时进行初始化（在注册BeanDefinition到工厂中时候），延迟加载是在getBean时候。
