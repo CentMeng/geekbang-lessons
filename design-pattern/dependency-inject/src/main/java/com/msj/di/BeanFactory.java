@@ -73,6 +73,7 @@ public class BeanFactory {
                         if (refBeanDefinition == null) {
                             throw new NoSuchBeanDefinationException("Bean is not defined: " + arg.getArg());
                         }
+                        //点睛之笔，递归，先通过id找到BeanDefinition（这也是为什么注册的时候加载BeanDefinition和初始化Bean不在一个for循环的原因，防止编写的bean放到后面，发生ClassNotFount异常），然后获取到对象的class赋值给参数的class字段
                         argObjects[i] = createBean(refBeanDefinition);
                         argClasses[i] = argObjects[i].getClass();
                     } else {
