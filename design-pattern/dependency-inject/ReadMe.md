@@ -1,0 +1,6 @@
+# 简单的DI依赖注入框架
+
+利用工厂模式实现的简单的依赖注入框架，主要实践，面向接口而非实现的编程思想，以及工厂模式。
+
+实现思想：首先需要上帝类，组装对象以及提供程序入口，比如ApplicationContext是接口，ClassPathXmlApplicationContext是其实现，在实现中组装了BeanFactroy和BeanConfigParser，其中BeanConfigParser是解析配置为BeanDefinition对象。然后BeanFactroy根据BeanConfigParser解析出来的BeanDefinition对象通过java反射创建对象。对于生命周期的管理，可以读取配置对象的属性，进行注册和管理。注册和管理的方法可以用观察者模式,demo中没有实现生命周期的管理，只是在初始化context的实话，就注册实例化了bean。具体大家可以参考文章[孟少杰博客](https://www.bb.bj.cn/article/56)
+
