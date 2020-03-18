@@ -15,7 +15,7 @@ public class HalfQuery {
 
         while(low <= high){
             //防止low和high过大导致int溢出，所以不采用(high+low)/2
-            int mid = (high+low)>>1;
+            int mid = low+(high-low)>>1;
             if(a[mid]== value){
                 return a[mid];
             }else if(a[mid]<value){
